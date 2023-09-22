@@ -17,14 +17,26 @@ class UIConsola:
         }
     @staticmethod
     def mostrar_menu():
-        pass
+        titulo = " Nerdle "
+        print(f"\n{titulo:_^30}")
+        print("a. Iniciar nuevo juego")
+        print("b. Mostrar reglas")
+        print("c. Mostrar estadisticas")
+        print("d. Salir")
+        print(f"{'_':_^30}")
 
     def solicitar_ecuacion(self):
-        pass
+        ecuacion = input("Ingrese su ecuacion: ")
+        if len(ecuacion) > 8 or len(ecuacion) < 8:
+            print(f"La {ecuacion} no es permitida")
+            self.solicitar_ecuacion()
+        else:
+            self.nerdle = Nerdle(ecuacion_usuario=ecuacion)
+            self.mostrar_ecuacion()  # Prueba
 
 
     def mostrar_ecuacion(self):
-        pass
+        print(self.nerdle.ecuacion)
     def iniciar_nuevo_juego(self):
         self.solicitar_ecuacion()
         self.nerdle.iniciar_nuevo_juego()
@@ -37,9 +49,6 @@ class UIConsola:
                 self.ejecutar_app()
             else:
                 self.colorear_ecuacion(datos, self.nerdle.usuario.ecuacion)
-
-
-
 
     def mostrar_reglas(self):
         pass
