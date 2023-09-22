@@ -7,6 +7,7 @@ class Nerdle:
         self.contador_partidas_ganadas: int = 0
         self.contador_partidas_perdidas: int = 0
 
+
     def contador_de_intentos(self) -> bool:
         if self.contador_intentos < 7:
             self.contador_intentos += 1
@@ -43,4 +44,14 @@ class Jugador:
 
 
 class Ecuacion:
-    pass
+    def __init__(self):
+        self.extencion_ecuacion: int = 8
+        self.caracteres_validos: list[str] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "="]
+
+    def es_logica(self, ecuacion_usuario):
+        if len(ecuacion_usuario) == self.extencion_ecuacion:
+            for i in range(len(ecuacion_usuario)):
+                if ecuacion_usuario[i] in self.caracteres_validos:
+                    return True
+        else:
+            return False
