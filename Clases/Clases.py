@@ -13,6 +13,15 @@ class Nerdle:
         else:
             return False
 
+
+    def gano_partida(self):
+        if self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is True:
+            return True
+        elif self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is False:
+            return False
+        else:
+            return False
+
 class Jugador:
     pass
 
