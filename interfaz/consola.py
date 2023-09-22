@@ -1,3 +1,5 @@
+import sys
+
 resetear_color = "\033[0m"  # Restablecer el color y otros atributos de formato
 color_verde = "\033[32m"
 color_amarillo = "\033[33m" # Texto amarillo
@@ -55,8 +57,11 @@ class UIConsola:
 
     def mostrar_estadisticas(self):
         pass
-    def salir(self):
-        pass
+
+    @staticmethod
+    def salir():
+        print(f"\nGRACIAS POR JUGAR NERDLE, VUELVA PRONTO")
+        sys.exit(0)
     def ejecutar_app(self):
         print("\nBIENVENIDO A NERDLE")
         while True:
