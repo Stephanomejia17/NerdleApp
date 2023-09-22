@@ -1,5 +1,6 @@
 import random
 
+
 class Nerdle:
     def __init__(self):
         self.contador_intentos: int = 0
@@ -13,7 +14,6 @@ class Nerdle:
         else:
             return False
 
-
     def gano_partida(self):
         if self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is True:
             return True
@@ -22,12 +22,25 @@ class Nerdle:
         else:
             return False
 
+    def contador_de_juegos(self):
+        if self.gano_partida() is True:
+            self.contador_partidas_ganadas += 1
+        else:
+            self.contador_partidas_perdidas += 1
+        return
+
+    def estadistica_de_partidas(self):
+        if self.gano_partida() is True:
+            self.contador_partidas_ganadas += 1
+        else:
+            self.contador_partidas_perdidas += 1
+        return
+
+
+
 class Jugador:
     pass
 
+
 class Ecuacion:
     pass
-
-
-
-
