@@ -1,14 +1,15 @@
 import random
-
-class Nerdle:
-    pass
-
+from typing import ClassVar, Optional, Union
 
 class Ecuacion:
-    ecuaciones: list = []
-    ecuacion_alea: str
+
     def __init__(self):
-        self.ecuacion: list[str] = []
+        self.ecuacion: str = ""
+        self.ecuaciones: list = []
+        self.ecuacion_alea: str = ""
+
+    def __str__(self) -> str:
+        return f"{self.ecuacion_alea}"
 
     def generar_ecuacion(self) -> str:
         alea = random.randint(0, 780)
@@ -21,10 +22,10 @@ class Ecuacion:
         # Procesa las líneas para eliminar caracteres de nueva línea ('\n') y crea una lista
         self.ecuaciones = [linea.strip() for linea in lineas]
 
-        ecuacion_aleatoria = self.ecuaciones.pop(alea)
-        return ecuacion_aleatoria
+        self.ecuacion_alea = self.ecuaciones.pop(alea)
+        return self.ecuacion_alea
 
-    def comparar_ecuaciones(self, ecuacion_usuario: str) -> bool | list[str]:
+    def comparar_ecuaciones(self, ecuacion_usuario: str) -> Union[bool, list[str]]:
         if self.ecuacion_alea == ecuacion_usuario:
             return True
         else:
@@ -36,9 +37,20 @@ class Ecuacion:
                     if self.ecuacion_alea[n] != ecuacion_usuario[n]:
                         if ecuacion_usuario[n] in self.ecuacion_alea:
                             resultado[n] = '1'
-        return resultado
-
+            return resultado
 
 class Jugador:
-    def __int__(self):
-        self.ecuacion: Ecuacion = None
+    def __init__(self, ecuacion: str):
+        self.ecuacion: str = ecuacion
+
+
+
+class Nerdle:
+    def __init__(self, ecuacion_usuario: str):
+        self.ecuacion: Ecuacion = Ecuacion()
+        self.usuario: Jugador = Jugador(ecuacion_usuario)
+
+    def iniciar_nuevo_juego(self):
+        self.ecuacion.generar_ecuacion()
+
+
