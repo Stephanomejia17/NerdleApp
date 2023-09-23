@@ -1,57 +1,53 @@
 import random
-
-
-class Nerdle:
-    def __init__(self):
-        self.contador_intentos: int = 0
-        self.contador_partidas_ganadas: int = 0
-        self.contador_partidas_perdidas: int = 0
-
-
-    def contador_de_intentos(self) -> bool:
-        if self.contador_intentos < 7:
-            self.contador_intentos += 1
-            return True
-        else:
-            return False
-
-    def gano_partida(self):
-        if self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is True:
-            return True
-        elif self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is False:
-            return False
-        else:
-            return False
-
-    def contador_de_juegos(self):
-        if self.gano_partida() is True:
-            self.contador_partidas_ganadas += 1
-        else:
-            self.contador_partidas_perdidas += 1
-        return
-
-    def estadistica_de_partidas(self):
-        if self.gano_partida() is True:
-            self.contador_partidas_ganadas += 1
-        else:
-            self.contador_partidas_perdidas += 1
-        return
-
-
-
-class Jugador:
-    pass
+from typing import ClassVar, Optional, Union
 
 
 class Ecuacion:
-    def __init__(self):
-        self.extencion_ecuacion: int = 8
-        self.caracteres_validos: list[str] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "="]
 
-    def es_logica(self, ecuacion_usuario):
-        if len(ecuacion_usuario) == self.extencion_ecuacion:
-            for i in range(len(ecuacion_usuario)):
-                if ecuacion_usuario[i] in self.caracteres_validos:
-                    return True
+    def __init__(self):
+        self.ecuacion: str = ""
+        self.ecuaciones: list = []
+        self.ecuacion_alea: str = ""
+
+    def __str__(self) -> str:
+        return f"{self.ecuacion_alea}"
+
+    def generar_ecuacion(self) -> str:
+        alea = random.randint(0, 780)
+
+        # Abre el archivo Notepad
+        with open('requirements/ecuaciones.txt', 'r') as archivo:
+            # Lee todas las líneas del archivo y las almacena en una lista
+            lineas = archivo.readlines()
+
+        # Procesa las líneas para eliminar caracteres de nueva línea ('\n') y crea una lista
+        self.ecuaciones = [linea.strip() for linea in lineas]
+
+        self.ecuacion_alea = self.ecuaciones.pop(alea)
+        return self.ecuacion_alea
+
+
+class Jugador:
+    def __init__(self, ecuacion: str):
+        self.ecuacion: str = ecuacion
+
+
+
+class Nerdle:
+    def __init__(self, ecuacion_usuario: str):
+        self.ecuacion: Ecuacion = Ecuacion()
+        self.usuario: Jugador = Jugador(ecuacion_usuario)
+        self.contador_partidas_ganadas: int = 0
+        self.contador_partidas_perdidas: int = 0
+
+    def contador_de_intentos(self, contador_intentos: int) -> int:
+        if contador_intentos < 7:
+            contador_intentos += 1
+            return contador_intentos
+
         else:
-            return False
+            return -1
+    def iniciar_nuevo_juego(self):
+        return self.ecuacion.generar_ecuacion()
+
+
