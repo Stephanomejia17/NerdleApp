@@ -13,7 +13,7 @@ class UIConsola:
         self.nerdle: Optional[Nerdle] = None
         self.opciones = {
             "1": self.iniciar_nuevo_juego,
-            "2": self.mostrar_reglas,
+            "2": self.imprimir_reglas,
             "3": self.mostrar_estadisticas,
             "4": self.salir
         }
@@ -29,6 +29,23 @@ class UIConsola:
         print("3. Mostrar estadisticas")
         print("4. Salir")
         print(f"{'_':_^30}")
+
+    @staticmethod
+    def imprimir_reglas():
+
+        print("Nerdle:\n\n"
+              "------------------------------------------------------------------------------\n"
+              "Resuelve la ecuación en seis intentos\n"
+              "- Componen la ecuación: números (0-9), operaciones básicas y el signo igual.\n"
+              "- Tienes 6 intentos para colocarlos y llegar al resultado correcto.\n"
+              f"- Los colores indican lo siguiente:\n"
+              f"  1. {color_verde}Verde{resetear_color} correcta\n"
+              f"  2. {color_amarillo} Amarillo {resetear_color} existe pero está en la posición incorrecta\n"
+              f"  3. {color_rojo} Rojo {resetear_color} no pertenece a la ecuación.\n"
+              "- Sigue el orden de operaciones y permite conmutabilidad en el resultado.\n"
+              "- El objetivo es resolverla en el menor número de intentos posible.\n\n"
+              "¡Buena suerte!\n"
+              "_______________________________________________________________________________")
 
     def solicitar_ecuacion(self):
         if self.intentos != 6:
