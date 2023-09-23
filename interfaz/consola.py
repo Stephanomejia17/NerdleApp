@@ -1,5 +1,5 @@
 import sys
-
+from typing import ClassVar, Optional, Union
 resetear_color = "\033[0m"  # Restablecer el color y otros atributos de formato
 color_verde = "\033[32m"
 color_amarillo = "\033[33m" # Texto amarillo
@@ -12,45 +12,46 @@ class UIConsola:
     def __init__(self):
         self.nerdle: Optional[Nerdle] = None
         self.opciones = {
-            "a": self.iniciar_nuevo_juego,
-            "b": self.mostrar_reglas,
-            "c": self.mostrar_estadisticas,
-            "d": self.salir
+            "1": self.iniciar_nuevo_juego,
+            "2": self.mostrar_reglas,
+            "3": self.mostrar_estadisticas,
+            "4": self.salir
         }
+        self.lista_de_intentos: list[str] = []
+        self.ecuacion_generada: str = ''
+        self.intentos: int = 0
     @staticmethod
     def mostrar_menu():
         titulo = " Nerdle "
         print(f"\n{titulo:_^30}")
-        print("a. Iniciar nuevo juego")
-        print("b. Mostrar reglas")
-        print("c. Mostrar estadisticas")
-        print("d. Salir")
+        print("1. Iniciar nuevo juego")
+        print("2. Mostrar reglas")
+        print("3. Mostrar estadisticas")
+        print("4. Salir")
         print(f"{'_':_^30}")
 
     def solicitar_ecuacion(self):
-        ecuacion = input("Ingrese su ecuacion: ")
-        if len(ecuacion) > 8 or len(ecuacion) < 8:
-            print(f"La {ecuacion} no es permitida")
-            self.solicitar_ecuacion()
-        else:
-            self.nerdle = Nerdle(ecuacion_usuario=ecuacion)
-            self.mostrar_ecuacion()  # Prueba
-
-
-    def mostrar_ecuacion(self):
-        print(self.nerdle.ecuacion)
-    def iniciar_nuevo_juego(self):
-        self.solicitar_ecuacion()
-        self.nerdle.iniciar_nuevo_juego()
-        datos: bool | list[str] = self.nerdle.ecuacion.comparar_ecuaciones(self.nerdle.usuario.ecuacion)
-        print(self.nerdle.ecuacion.ecuacion_alea)
-        for i in range(0,6):
-            if datos == True:
-                print("¡¡¡GANASTE!!!")
-                time.sleep(2)
-                self.ejecutar_app()
+        if self.intentos != 6:
+            ecuacion = input("Ingrese su ecuacion: ")
+            if len(ecuacion) > 8 or len(ecuacion) < 8:
+                print(f"La {ecuacion} no es permitida")
+                self.solicitar_ecuacion()
             else:
-                self.colorear_ecuacion(datos, self.nerdle.usuario.ecuacion)
+                self.intentos = self.nerdle.contador_de_intentos(self.intentos)
+                print(f"ESTÁS EN EL INTENTO {self.intentos} DE 6")
+                self.nerdle = Nerdle(ecuacion_usuario=ecuacion)
+                self.lista_de_intentos = self.comparar_ecuaciones(ecuacion)
+                self.colorear_ecuacion(self.lista_de_intentos, ecuacion)
+                self.solicitar_ecuacion()
+        else:
+            print("PERDISTE :O")
+
+
+    def iniciar_nuevo_juego(self):
+        self.intentos = 0
+        self.ecuacion_generada = self.nerdle.iniciar_nuevo_juego()
+        self.solicitar_ecuacion()
+
 
     def mostrar_reglas(self):
         pass
@@ -58,11 +59,9 @@ class UIConsola:
     def mostrar_estadisticas(self):
         pass
 
-    @staticmethod
-    def salir():
-        print(f"\nGRACIAS POR JUGAR NERDLE, VUELVA PRONTO")
-        sys.exit(0)
     def ejecutar_app(self):
+        self.nerdle = Nerdle('')
+        self.nerdle.ecuacion.generar_ecuacion()
         print("\nBIENVENIDO A NERDLE")
         while True:
             self.mostrar_menu()
@@ -72,6 +71,22 @@ class UIConsola:
                 accion()
             else:
                 print(f"{opcion} no es una opción válida")
+
+    def comparar_ecuaciones(self, ecuacion_usuario: str) -> Union[bool, list[str]]:
+        if self.ecuacion_generada == ecuacion_usuario:
+            print("FELICIDADES, GANASTE!!")
+            self.ejecutar_app()
+        else:
+            resultado: list[str] = ['0'] * 8
+            for n in range(0, 8):
+                if self.ecuacion_generada[n] == ecuacion_usuario[n]:
+                    resultado[n] = '2'  # si es igual
+                else:
+                    if self.ecuacion_generada[n] != ecuacion_usuario[n]:
+                        if ecuacion_usuario[n] in self.ecuacion_generada:
+                            resultado[n] = '1'
+
+            return resultado
     def colorear_ecuacion(self, listado_de_colores: list[str], ecuacion_usuario: str):
         ecuacion_coloreada = ""
         for valor in range(len(listado_de_colores)):
@@ -81,10 +96,12 @@ class UIConsola:
                 ecuacion_coloreada += (color_amarillo + ecuacion_usuario[valor] + resetear_color)
             else:
                 ecuacion_coloreada += (color_rojo + ecuacion_usuario[valor] + resetear_color)
+
+        self.lista_de_intentos.clear()
         print(ecuacion_coloreada)
 
-
-
-
-
+    @staticmethod
+    def salir():
+        print("\nGRACIAS POR JUGAR NERDLE. VUELVA PRONTO")
+        sys.exit(0)
 

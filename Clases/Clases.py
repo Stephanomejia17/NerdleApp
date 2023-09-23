@@ -26,19 +26,6 @@ class Ecuacion:
         self.ecuacion_alea = self.ecuaciones.pop(alea)
         return self.ecuacion_alea
 
-    def comparar_ecuaciones(self, ecuacion_usuario: str) -> Union[bool, list[str]]:
-        if self.ecuacion_alea == ecuacion_usuario:
-            return True
-        else:
-            resultado: list[str] = ['0'] * 8
-            for n in range(0, 8):
-                if self.ecuacion_alea[n] == ecuacion_usuario[n]:
-                    resultado[n] = '2'  # si es igual
-                else:
-                    if self.ecuacion_alea[n] != ecuacion_usuario[n]:
-                        if ecuacion_usuario[n] in self.ecuacion_alea:
-                            resultado[n] = '1'
-            return resultado
 
 class Jugador:
     def __init__(self, ecuacion: str):
@@ -50,26 +37,17 @@ class Nerdle:
     def __init__(self, ecuacion_usuario: str):
         self.ecuacion: Ecuacion = Ecuacion()
         self.usuario: Jugador = Jugador(ecuacion_usuario)
-        self.contador_intentos: int = 0
         self.contador_partidas_ganadas: int = 0
         self.contador_partidas_perdidas: int = 0
 
-    def iniciar_nuevo_juego(self):
-        self.ecuacion.generar_ecuacion()
-    
-    def contador_de_intentos(self) -> bool:
-        if self.contador_intentos < 7:
-            self.contador_intentos += 1
-            return True
-        else:
-            return False
+    def contador_de_intentos(self, contador_intentos: int) -> int:
+        if contador_intentos < 7:
+            contador_intentos += 1
+            return contador_intentos
 
-    def gano_partida(self):
-        if self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is True:
-            return True
-        elif self.ecuacion.comparar_ecuaciones() is True and self.contador_de_intentos() is False:
-            return False
         else:
-            return False
+            return -1
+    def iniciar_nuevo_juego(self):
+        return self.ecuacion.generar_ecuacion()
 
 
