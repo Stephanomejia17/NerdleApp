@@ -52,7 +52,10 @@ class UIConsola:
     def solicitar_ecuacion(self):
         if self.intentos != 6:
             ecuacion = input("Ingrese su ecuacion: ")
-            if len(ecuacion) > 8 or len(ecuacion) < 8:
+            separador = ecuacion.split(sep='=')
+            operados = eval(separador[0])
+            resultado = int(separador[1])
+            if (len(ecuacion) > 8 or len(ecuacion) < 8) or (operados != resultado):
                 print(f"La {ecuacion} no es permitida")
                 self.solicitar_ecuacion()
             else:
