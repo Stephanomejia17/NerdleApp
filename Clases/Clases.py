@@ -1,6 +1,9 @@
 import random
 from typing import ClassVar, Optional, Union
 
+numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+operadores = ['+', '-', '*', '/']
+
 
 class Ecuacion:
 
@@ -13,18 +16,38 @@ class Ecuacion:
         return f"{self.ecuacion_alea}"
 
     def generar_ecuacion(self) -> str:
-        alea = random.randint(0, 780)
+        pos_operador = random.randint(1, 3)
+        self.ecuacion_alea: str = ""
+        for i in range(0, 4):
 
-        # Abre el archivo Notepad
-        with open('requirements/ecuaciones.txt', 'r') as archivo:
-            # Lee todas las líneas del archivo y las almacena en una lista
-            lineas = archivo.readlines()
+            if i == pos_operador:
+                opr_alea = operadores[random.randint(0, len(operadores) - 1)]
+                self.ecuacion_alea += opr_alea
 
-        # Procesa las líneas para eliminar caracteres de nueva línea ('\n') y crea una lista
-        self.ecuaciones = [linea.strip() for linea in lineas]
+            indice_ecuacion = len(self.ecuacion_alea) - 1
 
-        self.ecuacion_alea = self.ecuaciones.pop(alea)
+            if (len(self.ecuacion_alea) == 0) or (self.ecuacion_alea[indice_ecuacion] in operadores):
+                num_alea = numeros[random.randint(1, len(numeros) - 1)]
+
+            else:
+                num_alea = numeros[random.randint(0, len(numeros) - 1)]
+
+            self.ecuacion_alea += num_alea
+
+        evaluacion: Union[float, int] = eval(self.ecuacion_alea)
+        if isinstance(eval(self.ecuacion_alea), int):
+            self.ecuacion_alea += '='
+            self.ecuacion_alea += f'{evaluacion}'
+        elif isinstance(eval(self.ecuacion_alea), float):
+            if evaluacion.is_integer():
+                self.ecuacion_alea += '='
+                self.ecuacion_alea += f'{int(evaluacion)}'
+
+        if len(self.ecuacion_alea) != 8:
+            self.generar_ecuacion()
+
         return self.ecuacion_alea
+
 
 
 class Jugador:
