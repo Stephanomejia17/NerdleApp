@@ -9,9 +9,11 @@ from Clases.Clases import Nerdle
 from typing import Optional
 import time
 class UIConsola:
-   
+
     def __init__(self):
-        self.nerdle: Optional[Nerdle] = None
+
+        self.nerdle: Optional[Nerdle] = Nerdle('')
+        self.cargar_base_Estadisticas()
         self.opciones = {
             "1": self.iniciar_nuevo_juego,
             "2": self.imprimir_reglas,
@@ -21,7 +23,7 @@ class UIConsola:
         self.lista_de_intentos: list[str] = []
         self.ecuacion_generada: str = ''
         self.intentos: int = 0
-        
+
     @staticmethod
     def mostrar_menu():
         titulo = " Nerdle "
@@ -61,25 +63,54 @@ class UIConsola:
             else:
                 self.intentos = self.nerdle.contador_de_intentos(self.intentos)
                 print(f"ESTÁS EN EL INTENTO {self.intentos} DE 6")
-                self.nerdle = Nerdle(ecuacion_usuario=ecuacion)
+                #self.nerdle = Nerdle(ecuacion_usuario=ecuacion)
                 self.lista_de_intentos = self.comparar_ecuaciones(ecuacion)
                 self.colorear_ecuacion(self.lista_de_intentos, ecuacion)
                 self.solicitar_ecuacion()
         else:
-            print("PERDISTE :O")
+            print("PERDISTE")
+            self.nerdle.contador_partidas_perdidas += 1
 
 
     def iniciar_nuevo_juego(self):
         self.intentos = 0
+        #self.nerdle.ecuacion.generar_ecuacion()
         self.ecuacion_generada = self.nerdle.iniciar_nuevo_juego()
         self.solicitar_ecuacion()
 
     def mostrar_estadisticas(self):
-        pass
+
+        estadisticas = self.nerdle.estadisticas
+
+        for indice, valores in enumerate(estadisticas, start=0):
+            if valores != '':
+                print(f"Partidas ganadas en {indice+1} intento: {valores}")
+
+        while True:
+            respuesta = input("Desearía que le mandemos las estadísticas a su correo electrónico? S/N: ")
+            if respuesta == 'S':
+                while True:
+                    correo = input("Ingrese su correo electrónico: ")
+                    comprobacion = input(f"El correo {correo} ingresado es correcto? S/N: ")
+                    if comprobacion == 'S':
+                        break
+
+                self.nerdle.send_email(correo)
+                break
+            elif respuesta == 'N':
+                break
+
+
+    def cargar_base_Estadisticas(self):
+        with open("requirements/Estadísticas.txt", 'r', encoding='utf-8') as file:
+            valores = (file.readline()).split(',')
+        for i in range(0, 6):
+            self.nerdle.estadisticas[i] = int(valores[i])
+
+
 
     def ejecutar_app(self):
-        self.nerdle = Nerdle('')
-        self.nerdle.ecuacion.generar_ecuacion()
+
         print("\nBIENVENIDO A NERDLE")
         while True:
             self.mostrar_menu()
@@ -93,6 +124,9 @@ class UIConsola:
     def comparar_ecuaciones(self, ecuacion_usuario: str) -> Union[bool, list[str]]:
         if self.ecuacion_generada == ecuacion_usuario:
             print("FELICIDADES, GANASTE!!")
+            self.nerdle.estadisticas[self.intentos - 1] += 1
+            print(self.nerdle.estadisticas)
+            self.nerdle.contador_partidas_ganadas += 1
             self.ejecutar_app()
         else:
             resultado: list[str] = ['0'] * 8
@@ -118,8 +152,18 @@ class UIConsola:
         self.lista_de_intentos.clear()
         print(ecuacion_coloreada)
 
-    @staticmethod
-    def salir():
+
+    def actualizar_base_Estadisticas(self):
+        with open("requirements/Estadísticas.txt", 'w', encoding='utf-8') as file:
+            res = ""
+            for i in range(0, 6):
+                res += f"{self.nerdle.estadisticas[i]},"
+
+            file.write(res)
+
+
+    def salir(self):
+        self.actualizar_base_Estadisticas()
         print("\nGRACIAS POR JUGAR NERDLE. VUELVA PRONTO")
         sys.exit(0)
 
