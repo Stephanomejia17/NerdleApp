@@ -54,6 +54,7 @@ class Ecuacion:
 
 
 
+
 class Jugador:
     def __init__(self, ecuacion: str):
         self.ecuacion: str = ecuacion

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>480</width>
+    <height>416</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 78, 234);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>411</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 20px;
+background-color: rgb(255, 255, 255);
+
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="Titulo">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>381</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 20pt &quot;Gill Sans Ultra Bold&quot;;
+ color: #000; 
+</string>
+        </property>
+        <property name="text">
+         <string>BIENVENIDO A NERDLE</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_3">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>120</y>
+         <width>391</width>
+         <height>231</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 20px;
+background-color: rgb(255, 255, 255);
+border: 4px solid #FF0000;
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>341</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>14</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="iniciar_nuevo_juego">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #FFD920;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font: bold 15px &quot;MS Serif&quot;;
+    padding: 5px 20px;
+}
+
+QPushButton:hover {
+    background-color: #FFEC3A;
+    color: #000;
+}
+
+QPushButton:pressed {
+    background-color: #FFC700;
+}</string>
+           </property>
+           <property name="text">
+            <string>Iniciar Juego</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mostrar_reglas">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #FFD920;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font: bold 15px &quot;MS Serif&quot;;
+    padding: 5px 20px;
+}
+
+QPushButton:hover {
+    background-color: #FFEC3A;
+    color: #000;
+}
+
+QPushButton:pressed {
+    background-color: #FFC700;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Reglas</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mostrar_estadisticas">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #FFD920;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font: bold 15px &quot;MS Serif&quot;;
+    padding: 5px 20px;
+}
+
+QPushButton:hover {
+    background-color: #FFEC3A;
+    color: #000;
+}
+
+QPushButton:pressed {
+    background-color: #FFC700;
+}</string>
+           </property>
+           <property name="text">
+            <string>Estadísticas</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="salir">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #FFD920;
+    color: #333;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font: bold 15px &quot;MS Serif&quot;;
+    padding: 5px 20px;
+}
+
+QPushButton:hover {
+    background-color: #FFEC3A;
+    color: #000;
+}
+
+QPushButton:pressed {
+    background-color: #FFC700;
+}</string>
+           </property>
+           <property name="text">
+            <string>Salir</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="Line" name="line">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>100</y>
+         <width>461</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="Line" name="line_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>360</y>
+         <width>461</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
