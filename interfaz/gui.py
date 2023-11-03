@@ -113,6 +113,8 @@ class VentanaEcuacion(QDialog):
         self.ecuaciones = []
         self.layouts = []
         self.buttons = []
+        self.lst_comparacion = self.comparar_ecuaciones(self.nerdle.usuario.ecuacion)
+        self.btn_cont = 0
         uic.loadUi("gui/Ecuacion2.ui", self)
         self.setFixedSize(self.size())
         self.__config()
@@ -137,7 +139,8 @@ class VentanaEcuacion(QDialog):
         self.llamar_comparacion()
 
     def llamar_comparacion(self):
-        self.comparar_ecuaciones(self.nerdle.usuario.ecuacion)
+        self.lst_comparacion = self.comparar_ecuaciones(self.nerdle.usuario.ecuacion)
+        self.actualizar_buttons()
         print(self.comparar_ecuaciones)
         #self.actualizar_layouts()
 
@@ -163,6 +166,7 @@ class VentanaEcuacion(QDialog):
         else:
             #print("PERDISTE")
             self.nerdle.contador_partidas_perdidas += 1
+            self.close()
 
     def comparar_ecuaciones(self, ecuacion_usuario: str) -> Union[bool, list[str]]:
         if self.consola.ecuacion_generada == ecuacion_usuario:
@@ -179,18 +183,30 @@ class VentanaEcuacion(QDialog):
         else:
             resultado: list[str] = ['0'] * 8
             for n in range(0, 8):
-                if len(self.nerdle.usuario.ecuacion) > 8:
+                if len(ecuacion_usuario) > 0:
                     if self.consola.ecuacion_generada[n] == ecuacion_usuario[n]:
                         resultado[n] = '2'  # si es igual
                     else:
                         if self.consola.ecuacion_generada[n] != ecuacion_usuario[n]:
                             if ecuacion_usuario[n] in self.consola.ecuacion_generada:
                                 resultado[n] = '1'
-
+            print(resultado)
             return resultado
 
-    def actualizar_layouts(self):
-        self.layouts[self.intentos].setText(f"{self.nerdle.usuario.ecuacion}")
+    def actualizar_buttons(self):
+        cont = 0
+        for i in range(self.btn_cont, 48):
+            self.buttons[i].setText(f"{self.nerdle.usuario.ecuacion[i]}")
+            if self.lst_comparacion[i] == '2':
+                self.buttons[i].setStyleSheet("background-color : green")
+            elif self.lst_comparacion[i] == '1':
+                self.buttons[i].setStyleSheet("background-color : red")
+            else:
+                self.buttons[i].setStyleSheet("background-color : grey")
+            cont += 1
+            if cont == 8:
+                break
+        self.btn_cont += 7
 
         if self.intentos == 5:
             mensaje = QMessageBox()
