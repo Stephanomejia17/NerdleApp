@@ -8,6 +8,8 @@ color_rojo = "\033[31m"
 from Clases.Clases import Nerdle
 from typing import Optional
 import time
+
+
 class UIConsola:
 
     def __init__(self):
@@ -100,14 +102,11 @@ class UIConsola:
             elif respuesta == 'N':
                 break
 
-
     def cargar_base_Estadisticas(self):
         with open("requirements/Estadísticas.txt", 'r', encoding='utf-8') as file:
             valores = (file.readline()).split(',')
         for i in range(0, 6):
             self.nerdle.estadisticas[i] = int(valores[i])
-
-
 
     def ejecutar_app(self):
 
@@ -125,7 +124,6 @@ class UIConsola:
         if self.ecuacion_generada == ecuacion_usuario:
             print("FELICIDADES, GANASTE!!")
             self.nerdle.estadisticas[self.intentos - 1] += 1
-            print(self.nerdle.estadisticas)
             self.nerdle.contador_partidas_ganadas += 1
             self.ejecutar_app()
         else:
@@ -139,6 +137,7 @@ class UIConsola:
                             resultado[n] = '1'
 
             return resultado
+
     def colorear_ecuacion(self, listado_de_colores: list[str], ecuacion_usuario: str):
         ecuacion_coloreada = ""
         for valor in range(len(listado_de_colores)):

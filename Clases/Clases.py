@@ -6,7 +6,7 @@ from email.message import EmailMessage
 NUMEROS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 OPERADORES = ['+', '-', '/', '*']
 
- # 20 * 3 = 60
+
 class Ecuacion:
 
     def __init__(self):
@@ -48,17 +48,12 @@ class Ecuacion:
         if len(self.ecuacion_alea) != 8:
             self.generar_ecuacion()
 
-        print(self.ecuacion_alea)
-
         return self.ecuacion_alea
-
-
 
 
 class Jugador:
     def __init__(self, ecuacion: str):
         self.ecuacion: str = ecuacion
-
 
 
 class Nerdle:
@@ -71,7 +66,6 @@ class Nerdle:
         self.contador_partidas_perdidas: int = 0
         self.estadisticas = [0, 0, 0, 0, 0, 0]
 
-
     def contador_de_intentos(self, contador_intentos: int) -> int:
         if contador_intentos < 7:
             contador_intentos += 1
@@ -79,6 +73,7 @@ class Nerdle:
 
         else:
             return -1
+
     def iniciar_nuevo_juego(self):
         return self.ecuacion.generar_ecuacion()
 
@@ -121,5 +116,5 @@ class Nerdle:
         # Enviando mensaje
         server.send_message(self.message)
 
-        #Cerrando coneccion con el servidor
+        # Cerrando coneccion con el servidor
         server.quit()
